@@ -2,9 +2,9 @@
 
 namespace Geekbrains
 {
-    public abstract class BaseObjectScene : MonoBehaviour
-    {
-        private int _layer;
+	public abstract class BaseObjectScene : MonoBehaviour
+	{
+		private int _layer;
 		private Color _color;
 		private bool _isVisible;
 		[HideInInspector] public Rigidbody Rigidbody;
@@ -17,7 +17,7 @@ namespace Geekbrains
 			Rigidbody = GetComponent<Rigidbody>();
 			Transform = GetComponent<Transform>();
 		}
-		
+
 		#endregion
 
 		#region Property
@@ -100,9 +100,12 @@ namespace Geekbrains
 
 		private void AskColor(Transform obj, Color color)
 		{
-			foreach (var curMaterial in obj.GetComponent<Renderer>().materials)
+			if (obj.TryGetComponent<Renderer>(out var renderer))
 			{
-				curMaterial.color = color;
+				foreach (var curMaterial in renderer.materials)
+				{
+					curMaterial.color = color;
+				}
 			}
 			if (obj.childCount <= 0) return;
 			foreach (Transform d in obj)
@@ -111,7 +114,7 @@ namespace Geekbrains
 			}
 		}
 		#endregion
-		
+
 		/// <summary>
 		/// Выключает физику у объекта и его детей
 		/// </summary>
