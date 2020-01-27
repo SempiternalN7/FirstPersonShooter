@@ -122,8 +122,15 @@ namespace Geekbrains
 					MovePoint(Target.position);
 				}
 
-                //todo Потеря персонажа
-            }
+				if (Vector3.Distance(_point, transform.position) >= 13)
+				{
+					StateBot = StateBot.Patrol;
+					_point = Patrol.GenericPoint(transform);
+					MovePoint(_point);
+					Agent.stoppingDistance = 0;
+				}
+				//todo Потеря персонажа
+			}
         }
 
         private void ResetStateBot()
